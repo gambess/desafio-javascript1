@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Ejercicio 1</title>
+    </head>
+
+    <body>
+        <div>
+            <div style="width: 40%;margin: 0 auto">
+                <h2>
+                    Escríbenos !!!
+                </h2>
+                <div class="resultado" style="color:green;font-style: italic">
+                </div>
+                <form id="formulario">
+                    <div>
+                        <div style="display: flex;flex-direction: column;">
+                            <label>
+                                Nombre completo
+                            </label>
+                            <input id="nombre" type="text">
+                            <p class="errorNombre" style="color:red;font-style: italic;"></p>
+                        </div>
+                        <div style="display: flex;flex-direction: column;">
+                            <label>
+                                Asunto
+                            </label>
+                            <input id="asunto" type="text">
+                            <p class="errorAsunto" style="color:red;font-style: italic;"></p>
+                        </div>
+                    </div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>
+                            Mensaje
+                        </label>
+                        <textarea id="mensaje"></textarea>
+                        <p class="errorMensaje" style="color:red;font-style: italic;"></p>
+                    </div>
+                    <div>
+                        <button id="botton" type="submit">
+                            Envíar mensaje
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            //Formulario y elementos
+            const form = document.getElementById("formulario");
+            const elementsForm = form.elements;
+            const inputName = elementsForm[0];
+            const inputSbjt = elementsForm[1];
+            const inputMsg = elementsForm[2];
+
+            //Para pintar resultados y mensajes
+            const errorName = document.querySelector(".errorNombre");
+            const errorSubject = document.querySelector(".errorAsunto");
+            const errorMsg = document.querySelector(".errorMensaje");
+            const successMsg = document.querySelector(".resultado");
+
+            var passValidation = true;
+
+            //LISTENER QUE VALIDA EL ENVIO
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                cleanMessages();
+                if (!validation(inputName.value)) {
+                    errorName.innerHTML = "El Nombre es requerido.";
+                    passValidation = false;
+                }
+                if (!validation(inputSbjt.value)) {
+                    errorSubject.innerHTML = "El Asunto es requerido.";
+                    passValidation = false;
+                }
+                if (!validation(inputMsg.value)) {
+                    errorMsg.innerHTML = "El mensaje es requerido.";
+                    passValidation = false;
+                }
+                if (passValidation) {
+                    successMsg.innerHTML = "Mensaje enviado con exito !!!";
+                }
+            });
+
+            //limpiar mensajes de error al iniciar el listener
+            function cleanMessages() {
+                errorName.innerHTML = "";
+                errorSubject.innerHTML = "";
+                errorMsg.innerHTML = "";
+                successMsg.innerHTML = "";
+            }
+
+            //Funcion anonima para validar cada input
+            let validation = function (value) {
+//                let textValidation = /\w\s*/igm;
+                let textValidation = /[a-zA-Z]+/gm;
+                if (textValidation.test(value) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+
+            };
+
+        </script>
+    </body>
+
+</html>
